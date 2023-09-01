@@ -6,14 +6,12 @@ import (
 )
 
 func HandleHelpModule(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
-	messageText := update.Message.Text
 	chatID := update.Message.Chat.ID
 
-	helpMessage := `
-FrostyAssistant-Bot 使用帮助
-/help - 显示帮助菜单
-...
-`
+	helpMessage := "FrostyAssistant-Bot 使用帮助\n" +
+		"/help - 显示帮助菜单\n" +
+		"/luck - 测试每日幸运值"
+
 	msg := tgbotapi.NewMessage(chatID, helpMessage)
 	_, err := bot.Send(msg)
 	if err != nil {

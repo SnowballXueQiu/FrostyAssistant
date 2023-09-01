@@ -1,6 +1,7 @@
 package main
 
 import (
+	"FrostyAssistant/components"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"log"
 )
@@ -15,10 +16,10 @@ func main() {
 	bot.Debug = true
 
 	// Set up update config, and launch Bot
-	update := tgbotapi.NewUpdate(0)
-	update.Timeout = 60
+	u := tgbotapi.NewUpdate(0)
+	u.Timeout = 60
 
-	updates, err := bot.GetUpdatesChan(update)
+	updates, err := bot.GetUpdatesChan(u)
 
 	for update := range updates {
 		if update.Message == nil {
@@ -29,16 +30,15 @@ func main() {
 		chatID := update.Message.Chat.ID
 
 		switch {
-		//case messageText == "/start":
-		//	welcomeMessage := "欢迎使用机器人！"
-		//	tgbotapi.NewMessage(chatID, welcomeMessage).Send(bot)
-
 		case messageText == "/help":
-			reply.HandleHelpModule(bot, update)
+			components.HandleHelpModule(bot, update)
+
+		case messageText == "/luck":
+			components.HandleLuckModule(bot, update)
 
 		default:
-			//defaultResponse := "不明白您说的是什么，请使用 /start 获取帮助。"
-			//tgbotapi.NewMessage(chatID, defaultResponse).Send(bot)
+			defaultResponse := "本喵真是看不懂一点, 请使用 /help 获取帮助!"
+			tgbotapi.NewMessage(chatID, defaultResponse).Send()
 		}
 	}
 }
