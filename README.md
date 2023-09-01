@@ -1,2 +1,3 @@
-# FrostyAssistant-tgbot
- FrostyAssistant Telegram Bot Source Code.
+# FrostyAssistant
+
+FrostyAssistant Telegram Bot Source Code.
