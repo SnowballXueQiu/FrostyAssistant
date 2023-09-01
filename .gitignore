@@ -19,3 +19,8 @@
 
 # Go workspace file
 go.work
+.idea/.name
+.idea/FrostyAssistant.iml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
