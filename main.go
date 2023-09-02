@@ -35,7 +35,6 @@ func main() {
 		}
 
 		messageText := update.Message.Text
-		chatID := update.Message.Chat.ID
 
 		switch {
 		case messageText == "/help":
@@ -43,10 +42,6 @@ func main() {
 
 		case messageText == "/luck":
 			components.HandleLuckModule(bot, update)
-
-		default:
-			defaultResponse := "本喵真是看不懂一点, 请使用 /help 获取帮助!"
-			tgbotapi.NewMessage(chatID, defaultResponse).Send()
 		}
 	}
 }
