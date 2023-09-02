@@ -65,7 +65,7 @@ func GetPositive(luckPoint int) string {
 }
 
 func GetNegative(luckPoint int) string {
-	index := int(math.Floor(float64(luckPoint) / 100 * float64(len(data.Negative))))
+	index := int(math.Floor(float64(100-luckPoint) / 100 * float64(len(data.Negative))))
 
 	return fmt.Sprintf(
 		"%s(%s)",
