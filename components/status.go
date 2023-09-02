@@ -5,6 +5,7 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 	"log"
 	"runtime"
+	"strings"
 	"time"
 )
 
@@ -43,6 +44,7 @@ func GetUptime(launchTime int64) string {
 	seconds := duration % time.Minute
 
 	uptime := fmt.Sprintf("%02d:%02d:%02d:%02d", days, hours, minutes, seconds)
+	uptime = strings.TrimRight(uptime, "0")
 
 	return uptime
 }
