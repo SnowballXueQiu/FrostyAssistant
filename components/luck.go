@@ -11,6 +11,28 @@ import (
 	"time"
 )
 
+func GetGreet() string {
+	hourNow := time.Now().Hour()
+	greet := ""
+
+	switch {
+	case hourNow >= 18:
+		greet = "晚上好~"
+	case hourNow >= 14:
+		greet = "下午好~"
+	case hourNow >= 11:
+		greet = "中午好~"
+	case hourNow >= 9:
+		greet = "上午好~"
+	case hourNow >= 6:
+		greet = "早上好~"
+	default:
+		greet = "早...早上好?"
+	}
+
+	return greet
+}
+
 func GetLuckPoint(seedCode int64) int {
 	rand.Seed(seedCode)
 
@@ -75,11 +97,12 @@ func HandleLuckModule(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 
 	luckPoint := GetLuckPoint(seedCode)
 
-	luckMessage := fmt.Sprintf("您今天的运势是: %s\n"+
+	luckMessage := fmt.Sprintf("%s, 您今天的运势是: %s\n"+
 		"- 点数为: %d\n"+
 		"- 宜: %s\n"+
 		"- 忌: %s\n"+
 		"*部分内容来源于 **洛谷**",
+		GetGreet(),
 		GetFortune(luckPoint), luckPoint,
 		GetPositive(seedCode), GetNegative(seedCode))
 
