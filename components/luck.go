@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func GetGreet() string {
+func GetGreeting() string {
 	hourNow := time.Now().Hour()
 	greet := ""
 
@@ -93,7 +93,7 @@ func HandleLuckModule(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 			"- 今日吉祥物: %s\n"+
 			"\n"+
 			"*部分内容来源于 洛谷 , 欢迎您的补充!",
-		GetGreet(),
+		GetGreeting(),
 		GetFortune(luckPoint), luckPoint,
 		GetPositive(luckPoint), GetNegative(luckPoint),
 		mascotToday)
