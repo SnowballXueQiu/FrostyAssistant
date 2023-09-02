@@ -54,38 +54,24 @@ func GetFortune(luckPoint int) string {
 	}
 }
 
-func GetPositive(seedCode int64) string {
-	rand.Seed(seedCode)
-	randomToday := rand.Float64()
+func GetPositive(luckPoint int) string {
+	index := int(math.Floor(float64(luckPoint) / 100 * float64(len(data.Positive))))
 
-	positiveTitles := make([]string, 0, len(data.Positive))
-	positiveComments := make(map[string]string)
-	for title, comment := range data.Positive {
-		positiveTitles = append(positiveTitles, title)
-		positiveComments[title] = comment
-	}
-
-	positiveTitle := positiveTitles[int(math.Floor(randomToday*float64(len(positiveTitles))))]
-	positiveComment := positiveComments[positiveTitle]
-
-	return fmt.Sprintf("%s(%s)", positiveTitle, positiveComment)
+	return fmt.Sprintf(
+		"%s(%s)",
+		data.Positive[index].Title,
+		data.Positive[index].Comment,
+	)
 }
 
-func GetNegative(seedCode int64) string {
-	rand.Seed(seedCode)
-	randomToday := rand.Float64()
+func GetNegative(luckPoint int) string {
+	index := int(math.Floor(float64(luckPoint) / 100 * float64(len(data.Negative))))
 
-	negativeTitles := make([]string, 0, len(data.Negative))
-	negativeComments := make(map[string]string)
-	for title, comment := range data.Negative {
-		negativeTitles = append(negativeTitles, title)
-		negativeComments[title] = comment
-	}
-
-	negativeTitle := negativeTitles[int(math.Floor(randomToday*float64(len(negativeTitles))))]
-	negativeComment := negativeComments[negativeTitle]
-
-	return fmt.Sprintf("%s(%s)", negativeTitle, negativeComment)
+	return fmt.Sprintf(
+		"%s(%s)",
+		data.Negative[index].Title,
+		data.Negative[index].Comment,
+	)
 }
 
 func HandleLuckModule(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
@@ -97,14 +83,15 @@ func HandleLuckModule(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 
 	luckPoint := GetLuckPoint(seedCode)
 
-	luckMessage := fmt.Sprintf("%s, 您今天的运势是: %s\n"+
-		"- 点数为: %d\n"+
-		"- 宜: %s\n"+
-		"- 忌: %s\n"+
-		"*部分内容来源于 [**洛谷**]",
+	luckMessage := fmt.Sprintf(
+		"%s, 您今天的运势是: %s\n"+
+			"- 点数为: %d\n"+
+			"- 宜: %s\n"+
+			"- 忌: %s\n"+
+			"*部分内容来源于 洛谷",
 		GetGreet(),
 		GetFortune(luckPoint), luckPoint,
-		GetPositive(seedCode), GetNegative(seedCode))
+		GetPositive(luckPoint), GetNegative(luckPoint))
 
 	msg := tgbotapi.NewMessage(chatID, luckMessage)
 	msg.ReplyToMessageID = update.Message.MessageID
