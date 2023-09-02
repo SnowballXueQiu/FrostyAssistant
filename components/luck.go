@@ -101,7 +101,7 @@ func HandleLuckModule(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 		"- 点数为: %d\n"+
 		"- 宜: %s\n"+
 		"- 忌: %s\n"+
-		"*部分内容来源于 **洛谷**",
+		"*部分内容来源于 [**洛谷**]",
 		GetGreet(),
 		GetFortune(luckPoint), luckPoint,
 		GetPositive(seedCode), GetNegative(seedCode))
