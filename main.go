@@ -6,9 +6,13 @@ import (
 	"github.com/joho/godotenv"
 	"log"
 	"os"
+	"time"
 )
 
+var launchTime = time.Now().Unix()
+
 func main() {
+
 	// Load environment variables from .env file
 	err := godotenv.Load()
 	if err != nil {
@@ -21,7 +25,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	bot.Debug = true
+	bot.Debug = false
 
 	// Set up update config, and launch Bot
 	u := tgbotapi.NewUpdate(0)
@@ -42,6 +46,9 @@ func main() {
 
 		case messageText == "/luck":
 			components.HandleLuckModule(bot, update)
+
+		case messageText == "/status":
+			components.HandleStatusModule(bot, update, launchTime)
 		}
 	}
 }
