@@ -82,16 +82,21 @@ func HandleLuckModule(bot *tgbotapi.BotAPI, update tgbotapi.Update) {
 	seedCode, _ := strconv.ParseInt(strconv.Itoa(userID)+currenDate, 10, 64)
 
 	luckPoint := GetLuckPoint(seedCode)
+	mascotToday := data.Mascot[int(math.Floor(float64(luckPoint)/100*float64(len(data.Mascot))))]
 
 	luckMessage := fmt.Sprintf(
 		"%s, 您今天的运势是: %s\n"+
+			"\n"+
 			"- 点数为: %d\n"+
 			"- 宜: %s\n"+
 			"- 忌: %s\n"+
-			"*部分内容来源于 洛谷",
+			"- 今日吉祥物: %s\n"+
+			"\n"+
+			"*部分内容来源于 洛谷 , 欢迎您的补充!",
 		GetGreet(),
 		GetFortune(luckPoint), luckPoint,
-		GetPositive(luckPoint), GetNegative(luckPoint))
+		GetPositive(luckPoint), GetNegative(luckPoint),
+		mascotToday)
 
 	msg := tgbotapi.NewMessage(chatID, luckMessage)
 	msg.ReplyToMessageID = update.Message.MessageID
